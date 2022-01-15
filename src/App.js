@@ -1,4 +1,4 @@
-import React , { useEffect } from "react";
+import React, { useEffect } from "react";
 import Home from "./Home";
 import Details from "./DetailPage";
 
@@ -20,7 +20,7 @@ const App = () => {
   const { connectWallet, address, error, provider } = useWeb3();
   useEffect(() => {
     sdk.setProviderOrSigner(signer);
-}, [signer]);
+  }, [signer]);
 
   return (
     <Router>
@@ -36,13 +36,15 @@ const App = () => {
               <Link to="/">Home</Link>
             </NavLink>
           </NavItem>
-          {
-            !address && (
-              <NavItem>
+          <NavItem>
+            {
+              !address && (
+
                 <Button variant="primary" onClick={() => connectWallet("injected")}>Connect Wallet</Button>
-              </NavItem>
-            )
-          }
+
+              )
+            }
+          </NavItem>
         </Nav>
 
         <Routes>

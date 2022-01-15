@@ -30,7 +30,7 @@ const Home = () => {
                 {
                     houses.map((home) => {
                         return (
-                                <Link to={'/home/' + home.id}>
+                                <Link to={'/home/' + home.id} key={home.id}>
                                     <Card style={{ width: '18rem', padding: "15px" }}>
                                         <Card.Img src={home.header_image} />
                                         <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
