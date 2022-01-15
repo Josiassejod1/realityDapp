@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./Home";
+import Details from "./DetailPage";
 
 import { Nav, NavItem, NavLink, Container } from "reactstrap";
 import {
@@ -9,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 
+
 const App = () => {
   return (
     <Router>
@@ -16,7 +18,7 @@ const App = () => {
         <Nav
         >
         <div>
-          <img src="./logo.png" />
+          <img src="logo.png" />
         </div>
           <NavItem>
             <NavLink
@@ -28,6 +30,7 @@ const App = () => {
      
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/home/:id" element={<Details />} />
         </Routes>
       </Container>
     </Router>
