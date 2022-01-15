@@ -51,13 +51,9 @@ const Details = () => {
             }
     }
 
-    useEffect(() =>   // This would replace all the hardcoded details
-    {
-        getListinDetails();
-    }, [])
-
     useEffect(() => {
         getHouses();
+        getListinDetails();
     }, []);
 
     useEffect(() => {
@@ -150,12 +146,6 @@ const Details = () => {
                     <Modal.Title>Your are bidding at {house.street}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Card>
-                        {/* <Card.Image src={nftAssets.asset}/> */}
-                        <Card.Body>
-
-                        </Card.Body>
-                    </Card>
                     <p>
                         You are placing a bid on a home if you are selected
                         you will be followed up with in other details. You will also
