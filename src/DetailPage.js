@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Card, Container, Col, Row, Image} from 'react-bootstrap';
-import Home from './Home';
+import { Card, Container, Col, Row, Image ,Button } from 'react-bootstrap';
 
 export * from 'react-router';
 
@@ -31,33 +30,51 @@ const Details = () => {
         <Container style={{ paddingTop: "100px" }}>
             <Row>
                 <Col>
-                    <Image src={house.header_image}  style={{width: "350px"}}/>
+                    <Image src={house.header_image} style={{ width: "350px" }} />
+                    <Row>
+                        <Button style={{
+                            backgroundColor: "#B10000", 
+                            width: "200px", 
+                            color: "white", 
+                            padding: "15px", 
+                            margin: "10px"
+                        }}>
+                            Place an Offer
+                        </Button>
+                    </Row>
                 </Col>
                 <Col>
                     <Container>
-                    <h1>
-                        {house.price}
-                    </h1>
-                    <p>
-                        Bath: {house.bath}
-                    </p>
-                    <p>
-                        Beds: {house.beds}
-                    </p>
-                    <p>
-                        Square Ft: {house.sqft}
-                    </p>
+                        <h1>
+                            $ {numberWithCommas(house.price)}
+                        </h1>
+                        <p>
+                            Bath: {house.bath}
+                        </p>
+                        <p>
+                            Beds: {house.beds}
+                        </p>
+                        <p>
+                            Square Ft: {house.sqft}
+                        </p>
                     </Container>
                 </Col>
             </Row>
             <Row>
-                <p style={{paddingTop: 10}}>
+                <p style={{ paddingTop: 10 }}>
                     {house.description}
                 </p>
+            </Row>
+
+            <Row>
+
             </Row>
         </Container>
     );
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 
 }
