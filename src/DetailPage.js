@@ -27,9 +27,6 @@ const Details = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
-
-
     function getHouses() {
         const res = fetch('/api/houses.json',
             {
@@ -48,7 +45,7 @@ const Details = () => {
     }
 
     // This would replace all the hardcoded details
-    // getListinDetails();
+    getListinDetails();
 
     useEffect(() => {
         getHouses();

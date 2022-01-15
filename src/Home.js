@@ -1,5 +1,5 @@
 
-import { Card, Button, Row, Container, CardGroup , Image} from 'react-bootstrap';
+import { Card, Button, Row, Container, CardGroup, Image } from 'react-bootstrap';
 import React, { useState, useEffect } from "react";
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
@@ -25,22 +25,33 @@ const Home = () => {
 
     const generateHomes = () => {
         return (
-            <Container style={{paddingTop: "40px"}}>
+            <Container style={{ paddingTop: "40px" }}>
                 <CardGroup>
-                {
-                    houses.map((home) => {
-                        return (
-                                <Link to={'/home/' + home.id} key={home.id}>
-                                    <Card style={{ width: '18rem', padding: "15px" }}>
-                                        <Card.Img src={home.header_image} />
-                                        <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
-                                        <Button variant="primary">Learn More</Button>
-                                    </Card>
-                                </Link>
-                        );
-                    })
-                }
-            </CardGroup>
+                    {
+                        houses.length > 0 ? (
+                            houses.map((home) => {
+                                return (
+                                    <Link to={'/home/' + home.id} key={home.id}>
+                                        <Card style={{ width: '18rem', padding: "15px" }}>
+                                            <Card.Img src={home.header_image} />
+                                            <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
+                                            <Button variant="primary">Learn More</Button>
+                                        </Card>
+                                    </Link>
+                                );
+                            })
+                        )  : (
+                            <Container style={{ justifyContent: 'center', alignItems: 'center', margin: "0 auto" }}>
+                                <Card>
+                                    <Card.Title>We are out of inventory 🏠 </Card.Title>
+                                    <Card.Body>
+                                        Checkback for update listings
+                                    </Card.Body>
+                                </Card>
+                            </Container>
+                        )
+                    }
+                </CardGroup>
             </Container>
         )
     }
@@ -58,18 +69,18 @@ const Home = () => {
             </div>
         );
     } else {
-        return(
-            <Container style={{paddingTop: "30px"}}>
+        return (
+            <Container style={{ paddingTop: "30px" }}>
                 <Card>
-                <Card.Img src="https://bafybeid6kv4rjcpu5za222sgzsxolucqy7esmlqylzapvgxwrf2xqofsua.ipfs.dweb.link/" width="75%"/>
-                <Card.Body>
-                    <Card.Title>Step Into A New Home Today with Reality dApp</Card.Title>
-                </Card.Body>
-            </Card>
+                    <Card.Img src="https://bafybeid6kv4rjcpu5za222sgzsxolucqy7esmlqylzapvgxwrf2xqofsua.ipfs.dweb.link/" width="75%" />
+                    <Card.Body>
+                        <Card.Title>Step Into A New Home Today with Reality dApp</Card.Title>
+                    </Card.Body>
+                </Card>
             </Container>
         )
     }
-   
+
 }
 
 export default Home;
