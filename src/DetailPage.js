@@ -7,8 +7,6 @@ import { ThirdwebSDK } from "@3rdweb/sdk";
 
 const Details = () => {
     const { address, provider } = useWeb3();
-
-    console.log(address);
     const sdk = useMemo(
         () =>
             provider ? new ThirdwebSDK(provider.getSigner()) : new ThirdwebSDK(),
@@ -66,7 +64,7 @@ const Details = () => {
             await market.makeAuctionListingBid(
                 {
                     listingId: house.listing_id,
-                    bidPricePerToken: listIdBid
+                    pricePerToken: listIdBid
                 }
             );
             console.log("Listing successful");
