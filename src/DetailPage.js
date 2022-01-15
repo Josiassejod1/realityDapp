@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
-import { Alert, Container, Col, Row, Image, Button, Modal } from 'react-bootstrap';
+import { Alert, Container, Col, Row, Image, Button, Modal, Card } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import {ethers} from "ethers";
@@ -15,6 +15,7 @@ const Details = () => {
     );
     const [listIdBid, setListIdOffer] = React.useState(0);
     const [placedBid, setPlacedBid] = useState(false);
+    const [nftAssets, setNFtAssets] = useState({});
     const [errors, hasError] = useState(false);
     const market = useMemo(
         () =>
@@ -41,16 +42,19 @@ const Details = () => {
     }
 
     const getListinDetails = async () => {
-        const resp = await market.getListing(house.listing_id);
-        const getWinningBid = await market.getWinningBid(house.listing_id);
-        const getActiveOffer = await market.getActiveOffer(house.listing_id, address);
-        console.log(resp);
-        console.log(getWinningBid);
-        console.log(getActiveOffer);
+            try{
+                const resp = await market.getListing(house.listing_id);
+                setNFtAssets(resp);
+                console.log(resp);
+            } catch(error) {
+                console.log(error);
+            }
     }
 
-    // This would replace all the hardcoded details
-    getListinDetails();
+    useEffect(() =>   // This would replace all the hardcoded details
+    {
+        getListinDetails();
+    }, [])
 
     useEffect(() => {
         getHouses();
@@ -146,6 +150,12 @@ const Details = () => {
                     <Modal.Title>Your are bidding at {house.street}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <Card>
+                        {/* <Card.Image src={nftAssets.asset}/> */}
+                        <Card.Body>
+
+                        </Card.Body>
+                    </Card>
                     <p>
                         You are placing a bid on a home if you are selected
                         you will be followed up with in other details. You will also
