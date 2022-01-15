@@ -1,9 +1,10 @@
 {
   "name": "create-react-app",
-  "type":"module",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@3rdweb/hooks": "^1.8.0",
+    "@3rdweb/sdk": "^1.35.0",
     "@zoralabs/nft-components": "^0.3.2",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
