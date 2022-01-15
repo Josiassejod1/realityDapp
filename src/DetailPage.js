@@ -40,17 +40,22 @@ const Details = () => {
             <Row>
                 <Col>
                     <Image src={house.header_image} style={{ width: "350px" }} />
-                    <Row>
-                        <Button style={{
-                            backgroundColor: "#B10000",
-                            width: "200px",
-                            color: "white",
-                            padding: "15px",
-                            margin: "10px"
-                        }}>
-                            Place an Offer
-                        </Button>
-                    </Row>
+                    {
+                        address && (
+                            <Row>
+                                <Button
+                                    style={{
+                                        backgroundColor: "#B10000",
+                                        width: "200px",
+                                        color: "white",
+                                        padding: "15px",
+                                        margin: "10px"
+                                    }}>
+                                    Place an Offer
+                                </Button>
+                            </Row>
+                        )
+                    }
                 </Col>
                 <Col>
                     <Container>
