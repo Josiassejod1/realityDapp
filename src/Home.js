@@ -27,12 +27,13 @@ const Home = () => {
 
     const generateHomes = () => {
         return (
-            <CardGroup>
+            <Container style={{paddingTop: "40px"}}>
+                <CardGroup>
                 {
                     houses.map((home) => {
                         return (
                                 <Link to={'/home/' + home.id}>
-                                    <Card style={{ width: '18rem' }}>
+                                    <Card style={{ width: '18rem', padding: "15px" }}>
                                         <Card.Img src={home.header_image} />
                                         <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
                                         <Button variant="primary">Learn More</Button>
@@ -42,6 +43,7 @@ const Home = () => {
                     })
                 }
             </CardGroup>
+            </Container>
         )
     }
 

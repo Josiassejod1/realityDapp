@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Container } from 'react-bootstrap';
+import { Card, Container, Col, Row, Image} from 'react-bootstrap';
+import Home from './Home';
 
 export * from 'react-router';
 
@@ -27,8 +28,33 @@ const Details = () => {
 
 
     return (
-        <Container>
-            <p>{JSON.stringify(house, null, 2)}</p>
+        <Container style={{ paddingTop: "100px" }}>
+            <Row>
+                <Col>
+                    <Image src={house.header_image}  style={{width: "350px"}}/>
+                </Col>
+                <Col>
+                    <Container>
+                    <h1>
+                        {house.price}
+                    </h1>
+                    <p>
+                        Bath: {house.bath}
+                    </p>
+                    <p>
+                        Beds: {house.beds}
+                    </p>
+                    <p>
+                        Square Ft: {house.sqft}
+                    </p>
+                    </Container>
+                </Col>
+            </Row>
+            <Row>
+                <p style={{paddingTop: 10}}>
+                    {house.description}
+                </p>
+            </Row>
         </Container>
     );
 

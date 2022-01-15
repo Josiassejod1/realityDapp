@@ -18,7 +18,7 @@ const App = () => {
         <Nav
         >
         <div>
-          <img src="logo.png" />
+          <img src="https://bafkreigq6tnebvxy5gqnaj2eqrjr6gqfczogn2hg43s4wqmezvvi7qun24.ipfs.dweb.link/" />
         </div>
           <NavItem>
             <NavLink
