@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { Alert, Container, Col, Row, Image, Button, Modal } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+import {ethers} from "ethers";
 
 
 const Details = () => {
@@ -40,8 +41,12 @@ const Details = () => {
     }
 
     const getListinDetails = async () => {
-        const resp = await market.getAuctionListing(house.listing_id);
+        const resp = await market.getListing(house.listing_id);
+        const getWinningBid = await market.getWinningBid(house.listing_id);
+        const getActiveOffer = await market.getActiveOffer(house.listing_id, address);
         console.log(resp);
+        console.log(getWinningBid);
+        console.log(getActiveOffer);
     }
 
     // This would replace all the hardcoded details
@@ -57,25 +62,26 @@ const Details = () => {
 
     const makeBid = async () => {
         setPlacedBid(true);
+        handleClose();
         try {
             await market.makeAuctionListingBid(
                 {
                     listingId: house.listing_id,
-                    pricePerToken: listIdBid
+                    pricePerToken: ethers.utils.parseUnits(listIdBid, 18)
                 }
             );
             console.log("Listing successful");
         } catch (err) {
-            hasError(true);
+            hasError(err);
             setTimeout(() => {
-                hasError(false);
-            }, 2000)
+                hasError(null);
+            }, 10000)
             console.log(err);
         }
 
         setTimeout(() => {
             setPlacedBid(false);
-        }, 2000)
+        }, 10000)
     }
 
     return (
@@ -83,7 +89,7 @@ const Details = () => {
             {placedBid &&
                 (
                     <Alert variant={!errors ? 'success' : 'danger'}>
-                        {!errors ? 'Placed A Bid For The Property 🏠' : 'Unable to Place Bid 😞'}
+                        {!errors ? 'Placed A Bid For The Property 🏠' : 'Unable to Place Bid 😞: ' + errors}
                     </Alert>
                 )
             }
