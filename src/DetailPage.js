@@ -46,7 +46,7 @@ const Details = () => {
                 <Col>
                     <Container>
                         <h1>
-                            $ {numberWithCommas(house.price)}
+                            $ {numberWithCommas(house.price ?? '')}
                         </h1>
                         <p>
                             Bath: {house.bath}
