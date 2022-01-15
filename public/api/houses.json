@@ -8,7 +8,7 @@
         "price": "625000",
         "beds": "1",
         "bath": "4",
-        "header_image": "/img/0.png",
+        "header_image": "https://bafkreidao7wigddtsp7gwxuvxcheelt5rh2uo5talgbbcvyqq6bgkk43by.ipfs.dweb.link/",
         "sqft": "3444",
         "description": "Welcome to the newest neighborhood within the Twelve Bridges master-planned community in Lincoln, CA. Envision exquisite architecture paired with flexible floorplans – designed for energetic families.",
         "images": []
@@ -23,7 +23,7 @@
         "beds": "3",
         "bath": "4",
         "sqft": "2000",
-        "header_image": "/img/1.png",
+        "header_image": "https://bafkreigfrphsofaldcuhajes7ujhc3t2clu5ucqu6eu5pco3eked4ymhsa.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the Solaire master-planned community in Roseville, CA. Offering single & two-story homes with unique spaces to work & play.",
         "images": []
     },
@@ -37,7 +37,7 @@
         "beds": "2",
         "bath": "4",
         "sqft": "2200",
-        "header_image": "/img/2.png",
+        "header_image": "https://bafkreidao7wigddtsp7gwxuvxcheelt5rh2uo5talgbbcvyqq6bgkk43by.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the Solaire master-planned community in Roseville, CA. Offering single & two-story homes with unique spaces to work & play.",
         "images": []
     }
