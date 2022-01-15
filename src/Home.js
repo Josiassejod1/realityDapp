@@ -10,9 +10,7 @@ import {
 
 const Home = () => {
     const [houses, setHouses] = useState([]);
-    const { connectWallet, address, error, provider} = useWeb3();
-    const sdk = new ThirdwebSDK();
-    const signer = provider ? provider.getSigner() : undefined;
+    const { address, error, provider} = useWeb3();
     function getHouses() {
         const res = fetch('/api/houses.json',
             {
@@ -46,11 +44,6 @@ const Home = () => {
             </Container>
         )
     }
-
-    useEffect(() => {
-        sdk.setProviderOrSigner(signer);
-    }, [signer]);
-
     useEffect(() => {
         getHouses();
     }, []);
@@ -66,12 +59,11 @@ const Home = () => {
         );
     } else {
         return(
-            <Container>
-                <Image src="https://bafybeid6kv4rjcpu5za222sgzsxolucqy7esmlqylzapvgxwrf2xqofsua.ipfs.dweb.link/" />
+            <Container style={{paddingTop: "30px"}}>
                 <Card>
+                <Card.Img src="https://bafybeid6kv4rjcpu5za222sgzsxolucqy7esmlqylzapvgxwrf2xqofsua.ipfs.dweb.link/" width="75%"/>
                 <Card.Body>
-                    <Card.Title>Step Into A New Today</Card.Title>
-                    <Button variant="primary" onClick={() => connectWallet("injected")}>Connect Today</Button>
+                    <Card.Title>Step Into A New Today with Reality dApp</Card.Title>
                 </Card.Body>
             </Card>
             </Container>

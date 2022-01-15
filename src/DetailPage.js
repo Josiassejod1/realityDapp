@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Card, Container, Col, Row, Image ,Button } from 'react-bootstrap';
-
-export * from 'react-router';
-
-
+import { Card, Container, Col, Row, Image, Button } from 'react-bootstrap';
+import { useWeb3 } from "@3rdweb/hooks";
+import { ThirdwebSDK } from "@3rdweb/sdk";
 
 const Details = () => {
+    const { connectWallet, address, error, provider } = useWeb3();
+    const sdk = new ThirdwebSDK();
+    //const market = sdk.getMarketModule(process.env.MARKET_PROVIDER);
+    const signer = provider ? provider.getSigner() : undefined;
     const query = useParams();
     const [house, setHouse] = useState({});
     function getHouses() {
@@ -25,6 +27,13 @@ const Details = () => {
         getHouses();
     }, []);
 
+    useEffect(() => {
+        sdk.setProviderOrSigner(signer);
+    }, [signer]);
+
+    function placeBid() {
+
+    }
 
     return (
         <Container style={{ paddingTop: "100px" }}>
@@ -33,10 +42,10 @@ const Details = () => {
                     <Image src={house.header_image} style={{ width: "350px" }} />
                     <Row>
                         <Button style={{
-                            backgroundColor: "#B10000", 
-                            width: "200px", 
-                            color: "white", 
-                            padding: "15px", 
+                            backgroundColor: "#B10000",
+                            width: "200px",
+                            color: "white",
+                            padding: "15px",
                             margin: "10px"
                         }}>
                             Place an Offer
@@ -64,10 +73,6 @@ const Details = () => {
                 <p style={{ paddingTop: 10 }}>
                     {house.description}
                 </p>
-            </Row>
-
-            <Row>
-
             </Row>
         </Container>
     );
