@@ -1,26 +1,37 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
-import { Card, Container, Col, Row, Image, Button, Modal } from 'react-bootstrap';
+import { Alert, Container, Col, Row, Image, Button, Modal } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-import Home from './Home';
-//dotenv.config();
+
 
 const Details = () => {
-    const { connectWallet, address, error, provider } = useWeb3();
-    const sdk = new ThirdwebSDK();
+    const { address, provider } = useWeb3();
+
+    console.log(address);
+    const sdk = useMemo(
+        () =>
+            provider ? new ThirdwebSDK(provider.getSigner()) : new ThirdwebSDK(),
+        [provider]
+    );
+    const [listIdBid, setListIdOffer] = React.useState(0);
+    const [placedBid, setPlacedBid] = useState(false);
+    const [errors, hasError] = useState(false);
     const market = useMemo(
         () =>
-          sdk.getMarketplaceModule("0xCb67A96FAd36D8c24f192B9eDaD5fF3c7A7A867f"),
+            sdk.getMarketplaceModule("0x679751621F15D5780C9e426989C49de109a42547"),
         [sdk]
-      );
+    );
     const signer = provider ? provider.getSigner() : undefined;
     const query = useParams();
     const [house, setHouse] = useState({});
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [bidData, setBidDate] = useState({});
+
+
+
+
     function getHouses() {
         const res = fetch('/api/houses.json',
             {
@@ -33,6 +44,14 @@ const Details = () => {
             }).then((myJson) => setHouse(myJson[query.id]));
     }
 
+    const getListinDetails = async () => {
+        const resp = await market.getAuctionListing(house.listing_id);
+        console.log(resp);
+    }
+
+    // This would replace all the hardcoded details
+    // getListinDetails();
+
     useEffect(() => {
         getHouses();
     }, []);
@@ -41,14 +60,38 @@ const Details = () => {
         sdk.setProviderOrSigner(signer);
     }, [signer]);
 
-    const makeBid = async (listingId) => {
-        // market.makeAuctionListingBid(
+    const makeBid = async () => {
+        setPlacedBid(true);
+        try {
+            await market.makeAuctionListingBid(
+                {
+                    listingId: house.listing_id,
+                    bidPricePerToken: listIdBid
+                }
+            );
+            console.log("Listing successful");
+        } catch (err) {
+            hasError(true);
+            setTimeout(() => {
+                hasError(false);
+            }, 2000)
+            console.log(err);
+        }
 
-        // )
+        setTimeout(() => {
+            setPlacedBid(false);
+        }, 2000)
     }
 
     return (
         <Container style={{ paddingTop: "100px" }}>
+            {placedBid &&
+                (
+                    <Alert variant={!errors ? 'success' : 'danger'}>
+                        {!errors ? 'Placed A Bid For The Property 🏠' : 'Unable to Place Bid 😞'}
+                    </Alert>
+                )
+            }
             <Row>
                 <Col>
                     <Image src={house.header_image} style={{ width: "350px" }} />
@@ -56,7 +99,7 @@ const Details = () => {
                         address && (
                             <Row>
                                 <Button
-                                onClick={handleShow}
+                                    onClick={handleShow}
                                     style={{
                                         backgroundColor: "#B10000",
                                         width: "200px",
@@ -102,15 +145,25 @@ const Details = () => {
                     <Modal.Title>Your are bidding at {house.street}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    You are placing a bid on a home if you are selected 
-                    you will be followed up with in other details. You will also
-                    need to provide supporting documents.
+                    <p>
+                        You are placing a bid on a home if you are selected
+                        you will be followed up with in other details. You will also
+                        need to provide supporting documents.
+                    </p>
+                    <p>
+                        { }
+                    </p>
+                    <input
+                        type="number"
+                        placeholder="enter bid for AUCTION"
+                        onChange={(e) => setListIdOffer(e.target.value)}
+                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Understood</Button>
+                    <Button variant="primary" onClick={makeBid}>Submit Offer</Button>
                 </Modal.Footer>
             </Modal>
         </Container>

@@ -10,7 +10,7 @@ import {
 
 const Home = () => {
     const [houses, setHouses] = useState([]);
-    const { address, error, provider} = useWeb3();
+    const { address } = useWeb3();
     function getHouses() {
         const res = fetch('/api/houses.json',
             {
