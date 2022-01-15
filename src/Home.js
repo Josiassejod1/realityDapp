@@ -63,7 +63,7 @@ const Home = () => {
                 <Card>
                 <Card.Img src="https://bafybeid6kv4rjcpu5za222sgzsxolucqy7esmlqylzapvgxwrf2xqofsua.ipfs.dweb.link/" width="75%"/>
                 <Card.Body>
-                    <Card.Title>Step Into A New Today with Reality dApp</Card.Title>
+                    <Card.Title>Step Into A New Home Today with Reality dApp</Card.Title>
                 </Card.Body>
             </Card>
             </Container>

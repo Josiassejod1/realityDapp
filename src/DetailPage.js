@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
-import { Card, Container, Col, Row, Image, Button } from 'react-bootstrap';
+import { Card, Container, Col, Row, Image, Button, Modal } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import Home from './Home';
-dotenv.config();
+//dotenv.config();
 
 const Details = () => {
     const { connectWallet, address, error, provider } = useWeb3();
