@@ -2,6 +2,7 @@
     {
         "id": 0,
         "street": "34 White Lily Ct",
+        "listing_id": 1,
         "city": "Sacramento",
         "state": "CA",
         "zipcode": "95833",
@@ -16,6 +17,7 @@
     {
         "id": 1,
         "street": "2419 Linden St",
+        "listing_id": 1,
         "city": "Oakland",
         "state": "CA",
         "zipcode": "94607",
@@ -35,6 +37,7 @@
         "zipcode": "95624",
         "price": "773000",
         "beds": "2",
+        "listing_id": 2,
         "bath": "4",
         "sqft": "2200",
         "header_image": "https://bafkreidao7wigddtsp7gwxuvxcheelt5rh2uo5talgbbcvyqq6bgkk43by.ipfs.dweb.link/",

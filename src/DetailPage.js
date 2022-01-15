@@ -3,14 +3,24 @@ import { useParams } from 'react-router';
 import { Card, Container, Col, Row, Image, Button } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+import Home from './Home';
+dotenv.config();
 
 const Details = () => {
     const { connectWallet, address, error, provider } = useWeb3();
     const sdk = new ThirdwebSDK();
-    //const market = sdk.getMarketModule(process.env.MARKET_PROVIDER);
+    const market = useMemo(
+        () =>
+          sdk.getMarketplaceModule("0xCb67A96FAd36D8c24f192B9eDaD5fF3c7A7A867f"),
+        [sdk]
+      );
     const signer = provider ? provider.getSigner() : undefined;
     const query = useParams();
     const [house, setHouse] = useState({});
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [bidData, setBidDate] = useState({});
     function getHouses() {
         const res = fetch('/api/houses.json',
             {
@@ -31,8 +41,10 @@ const Details = () => {
         sdk.setProviderOrSigner(signer);
     }, [signer]);
 
-    function placeBid() {
+    const makeBid = async (listingId) => {
+        // market.makeAuctionListingBid(
 
+        // )
     }
 
     return (
@@ -44,6 +56,7 @@ const Details = () => {
                         address && (
                             <Row>
                                 <Button
+                                onClick={handleShow}
                                     style={{
                                         backgroundColor: "#B10000",
                                         width: "200px",
@@ -79,6 +92,27 @@ const Details = () => {
                     {house.description}
                 </p>
             </Row>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Your are bidding at {house.street}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    You are placing a bid on a home if you are selected 
+                    you will be followed up with in other details. You will also
+                    need to provide supporting documents.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary">Understood</Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 

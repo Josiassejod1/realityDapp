@@ -2,6 +2,7 @@
   "name": "create-react-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@3rdweb/hooks": "^1.8.0",
     "@3rdweb/sdk": "^1.35.0",
