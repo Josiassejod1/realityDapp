@@ -27,6 +27,7 @@ const Details = () => {
     const query = useParams();
     const [house, setHouse] = useState({});
     const [show, setShow] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -44,7 +45,7 @@ const Details = () => {
                 let galleryItem = document.createElement('div');
                 galleryItem.classList.add('gallery-item');
                 galleryItem.innerHTML = `
-      <Image class="gallery-image" src="${response.url}" alt="gallery image"/>
+      <Image class="gallery-image" src="${response.url}" alt="gallery image", style={{margin: "10px"}}/>
     `
                 document.getElementById("generate").appendChild(galleryItem);
             })
@@ -100,11 +101,31 @@ const Details = () => {
         sdk.setProviderOrSigner(signer);
     }, [signer]);
 
-    const LocationPin = ({ text }) => (
-        <div className="pin">
-            <p className="pin-text">{text}</p>
-        </div>
-    )
+    const onFileUpload = () => {
+        const formData = new FormData();
+    }
+
+    const fileData = () => {
+        if (selectedFile) {
+            return (
+                <div>
+                    <h2>File Details:</h2>
+
+                    <p>File Name: {selectedFile.name}</p>
+
+
+                    <p>File Type: {selectedFile.type}</p>
+
+
+                    <p>
+                        Last Modified:{" "}
+                        {selectedFile.lastModifiedDate.toDateString()}
+                    </p>
+                </div>
+            );
+        }
+    };
+
     const makeBid = async () => {
         setPlacedBid(true);
         handleClose();
@@ -155,6 +176,13 @@ const Details = () => {
                                     }}>
                                     Place an Offer
                                 </Button>
+                                <div>
+                                    <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
+                                    <Button onClick={onFileUpload}>
+                                        Upload Supporting Docs
+                                    </Button>
+                                    {fileData()}
+                                </div>
                             </Row>
                         )
                     }
@@ -184,8 +212,8 @@ const Details = () => {
             </Row>
             <Row style={{ padding: "10px" }}>
                 <Col>
-                    <Map height={300}  defaultCenter={house?.coordinates ?? [38.610390, -121.538600]} defaultZoom={11}>
-                        <Marker  anchor={house?.coordinates ?? [38.610390, -121.538600]} />
+                    <Map height={300} defaultCenter={house?.coordinates ?? [38.610390, -121.538600]} defaultZoom={11}>
+                        <Marker anchor={house?.coordinates ?? [38.610390, -121.538600]} />
                     </Map>
                 </Col>
             </Row>
