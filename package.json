@@ -13,6 +13,7 @@
     "google-map-react": "^2.1.10",
     "iconify": "^1.4.0",
     "ipfs-core": "^0.13.0",
+    "nft.storage": "^5.2.0",
     "pigeon-maps": "^0.19.7",
     "react": "^16.6.1",
     "react-bootstrap": "^2.1.1",

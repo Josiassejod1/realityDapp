@@ -5,6 +5,8 @@ import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers, BigNumber } from "ethers";
 import { Map, Marker } from "pigeon-maps"
+import { NFTStorage } from 'nft.storage';
+import AB from "./AB.json";
 
 
 const Details = () => {
@@ -13,6 +15,11 @@ const Details = () => {
         () =>
             provider ? new ThirdwebSDK(provider.getSigner()) : new ThirdwebSDK(),
         [provider]
+    );
+    const fileUploadContract = new ethers.Contract(
+        process.env.SMART_CONTRACT_ID,
+        AB,
+        signer
     );
     const [listIdBid, setListIdOffer] = React.useState(0);
     const [placedBid, setPlacedBid] = useState(false);
@@ -102,7 +109,29 @@ const Details = () => {
     }, [signer]);
 
     const onFileUpload = () => {
-        const formData = new FormData();
+        console.table(selectedFile);
+        uploadToIPFS()
+    }
+
+    const uploadToIPFS = async () => {
+        const apiKey = process.env.NFT_STORAGE_KEY;
+        const client =  new NFTStorage({token: apiKey});
+
+        if (selectedFile) {
+            try {
+                const metadata = client.store({
+                    name: selectedFile.name,
+                    description: selectedFile.type,
+                    image: selectedFile
+                });
+                const url = metadata.url;
+                fileUploadContract.storeFile(url);
+            } catch(error) {
+                console.error(error)
+            }
+        } else {
+            console.alert('No file selected');
+        }
     }
 
     const fileData = () => {
