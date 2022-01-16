@@ -15,7 +15,7 @@ const Details = () => {
     );
     const [listIdBid, setListIdOffer] = React.useState(0);
     const [placedBid, setPlacedBid] = useState(false);
-    const [nftAssets, setNFtAssets] = useState({});
+    const [bidDetails, setBidDetails] = useState({});
     const [errors, hasError] = useState(false);
     const market = useMemo(
         () =>
@@ -38,7 +38,17 @@ const Details = () => {
                 }
             }).then((result) => {
                 return result.json();
-            }).then((myJson) => setHouse(myJson[query.id]));
+            }).then((myJson) => {
+                setHouse(myJson[query.id])
+               // getBidInfo(myJson[query.id].listing_id);
+            }).then(() => {
+              
+            });
+    }
+
+    const  getBidInfo = (id) => {
+        const getWinningBid = market.getWinningBid(BigNumber.from(id));
+        setBidDetails(getWinningBid);
     }
 
     const getListinDetails = async () => {
