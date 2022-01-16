@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
-import { Container, Button, Modal, Card, CardGroup } from 'react-bootstrap';
+import { Container, Button, Modal, Card, CardGroup, Table } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers, BigNumber } from "ethers";
+import AB from "./AB.json";
 
 
 
@@ -16,6 +17,7 @@ const Seller = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [listings, setListings] = useState([]);
+    const [files, setFiles] = useState([]);
     const sdk = useMemo(
         () =>
             provider ? new ThirdwebSDK(provider.getSigner()) : new ThirdwebSDK(),
@@ -29,34 +31,45 @@ const Seller = () => {
     );
     const signer = provider ? provider.getSigner() : undefined;
 
+    const fileUploadContract = new ethers.Contract(
+        "0x704fFB24CD0e7B140275736939f6B3c9E9537d35",
+        AB,
+        signer
+    );
+
     const getAllListings = async () => {
         try {
-            const resp = market.getAllListings();
-            resp.then((result) => {
-                setListings(result);
-            });
-           
-            console.log(resp);
+            await market.getAllListings().then((result) => setListings(result));
         } catch (error) {
             console.log(error);
         }
     }
 
-    useEffect(() => {
-        getAllListings()
+    const getAllFiles = async () => {
+        await fileUploadContract.getAllFles().then((result) => {
+            setFiles(result);
+            console.log(result);
+        });
 
-        const interval = setInterval(()=>{
+    }
+
+    useEffect(() => {
+        getAllListings();
+        getAllFiles();
+
+        const interval = setInterval(() => {
             getAllListings()
-           },20000)
-             
-             
-           return()=>clearInterval(interval)
-      
+            getAllFiles();
+        }, 10000)
+
+
+        return () => clearInterval(interval)
+
     }, []);
 
 
     return (
-        <Container style={{padding: "40px"}}>
+        <Container style={{ padding: "40px" }}>
             <CardGroup>
                 {
                     listings.length > 0 ? (
@@ -65,18 +78,18 @@ const Seller = () => {
                             const property = asset.properties;
                             const listingDetails = listing.reservePriceCurrencyValuePerToken;
                             const buyout = listing.buyoutCurrencyValuePerToken;
-          
-                           return(
-                            <Card style={{ width: '18rem', padding: "15px" }}>
-                            <Card.Title>{asset.name}</Card.Title>
-                            <Card.Img src={property.header_image ?? ''} />
-                            <Card.Text>{property.bed ?? property.beds ?? ''} bds</Card.Text>
-                            <Card.Text>{property.bath ?? ''} bath</Card.Text>
-                            <Card.Text>{property.sqrft ?? ''} sqrft</Card.Text>
-                            <Card.Text>{buyout.displayValue + buyout.symbol ?? ''} Buyout Price</Card.Text>
-                            <Card.Text>{listingDetails.displayValue + listingDetails.symbol ?? ''} Minimum Threshold Price</Card.Text>
-                        </Card>
-                           )
+
+                            return (
+                                <Card style={{ width: '18rem', padding: "15px" }}>
+                                    <Card.Title>{asset.name}</Card.Title>
+                                    <Card.Img src={property.header_image ?? ''} />
+                                    <Card.Text>{property.bed ?? property.beds ?? ''} bds</Card.Text>
+                                    <Card.Text>{property.bath ?? ''} bath</Card.Text>
+                                    <Card.Text>{property.sqrft ?? ''} sqrft</Card.Text>
+                                    <Card.Text>{buyout.displayValue + buyout.symbol ?? ''} Buyout Price</Card.Text>
+                                    <Card.Text>{listingDetails.displayValue + listingDetails.symbol ?? ''} Minimum Threshold Price</Card.Text>
+                                </Card>
+                            )
                         })
                     ) : (
                         <p>
@@ -85,6 +98,31 @@ const Seller = () => {
                     )
                 }
             </CardGroup>
+
+            <div>
+                {
+                    files.length > 0 ? (
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>NFT Document MetaData</th>
+                                </tr>
+                            </thead>
+                            {
+                                files.map((file) => {
+                                    return (
+                                        <tr>
+                                            <td>{file.owner.substring(0, 6) + "..."}</td>
+                                            <td>{file.tokenURI}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </Table>
+                    ) : <p>No files uploaded</p>
+                }
+            </div>
             {/* <Button onclick={handleShow}>
                 Create Listing
             </Button> */}

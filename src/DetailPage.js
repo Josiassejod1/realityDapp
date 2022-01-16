@@ -13,13 +13,8 @@ const Details = () => {
     const { address, provider } = useWeb3();
     const sdk = useMemo(
         () =>
-            provider ? new ThirdwebSDK(provider.getSigner()) : new ThirdwebSDK(),
+            provider ? new ThirdwebSDK(process.env.DEFAULT_PROVIDER) : new ThirdwebSDK(),
         [provider]
-    );
-    const fileUploadContract = new ethers.Contract(
-        process.env.SMART_CONTRACT_ID,
-        AB,
-        signer
     );
     const [listIdBid, setListIdOffer] = React.useState(0);
     const [placedBid, setPlacedBid] = useState(false);
@@ -31,6 +26,11 @@ const Details = () => {
         [sdk]
     );
     const signer = provider ? provider.getSigner() : undefined;
+    const fileUploadContract = new ethers.Contract(
+        "0x704fFB24CD0e7B140275736939f6B3c9E9537d35",
+        AB,
+        signer
+    );
     const query = useParams();
     const [house, setHouse] = useState({});
     const [show, setShow] = useState(false);
@@ -86,6 +86,7 @@ const Details = () => {
         const getWinningBid = market.getWinningBid(BigNumber.from(id));
         setBidDetails(getWinningBid);
     }
+    
 
     const getListinDetails = async () => {
         try {
@@ -114,23 +115,28 @@ const Details = () => {
     }
 
     const uploadToIPFS = async () => {
-        const apiKey = process.env.NFT_STORAGE_KEY;
+        const apiKey = process.env.REACT_APP_NFT_STORAGE_KEY;
         const client =  new NFTStorage({token: apiKey});
 
         if (selectedFile) {
             try {
-                const metadata = client.store({
+                const metadata = await client.store({
                     name: selectedFile.name,
-                    description: selectedFile.type,
-                    image: selectedFile
-                });
+                    description:
+                      "Supporting document: " + selectedFile.name,
+                    image: new File([selectedFile], selectedFile.name, { type: selectedFile.type }),
+                  });
                 const url = metadata.url;
-                fileUploadContract.storeFile(url);
+                console.log(url);
+                const resp = await fileUploadContract.storeFile(url);
+                console.log("Uploaded file");
             } catch(error) {
+                console.log("Uploading failed");
+                alert("Failure uploading file");
                 console.error(error)
             }
         } else {
-            console.alert('No file selected');
+            alert('No file selected');
         }
     }
 
