@@ -1,0 +1,33 @@
+diff --git a/node_modules/nft.storage/src/lib.js b/node_modules/nft.storage/src/lib.js
+index 035f589..fc4cbd4 100644
+--- a/node_modules/nft.storage/src/lib.js
++++ b/node_modules/nft.storage/src/lib.js
+@@ -17,7 +17,7 @@
+ import { transform } from 'streaming-iterables'
+ import pRetry, { AbortError } from 'p-retry'
+ import { TreewalkCarSplitter } from 'carbites/treewalk'
+-import { pack } from 'ipfs-car/pack'
++import { pack } from 'ipfs-car/dist/esm/pack'
+ import { CID } from 'multiformats/cid'
+ import * as Token from './token.js'
+ import { fetch, File, Blob, FormData, Blockstore } from './platform.js'
+diff --git a/node_modules/nft.storage/src/platform.web.js b/node_modules/nft.storage/src/platform.web.js
+index 63f4d0a..d13422a 100644
+--- a/node_modules/nft.storage/src/platform.web.js
++++ b/node_modules/nft.storage/src/platform.web.js
+@@ -1,4 +1,4 @@
+-import { MemoryBlockStore } from 'ipfs-car/blockstore/memory'
++import { MemoryBlockStore } from 'ipfs-car/dist/esm/blockstore/memory'
+ 
+ export const fetch = globalThis.fetch
+ export const FormData = globalThis.FormData
+diff --git a/node_modules/nft.storage/src/token.js b/node_modules/nft.storage/src/token.js
+index 62f80ad..d93fbcb 100644
+--- a/node_modules/nft.storage/src/token.js
++++ b/node_modules/nft.storage/src/token.js
+@@ -1,4 +1,4 @@
+-import { pack } from 'ipfs-car/pack'
++import { pack } from 'ipfs-car/dist/esm/pack'
+ import { CID } from 'multiformats/cid'
+ import * as Block from 'multiformats/block'
+ import { sha256 } from 'multiformats/hashes/sha2'
