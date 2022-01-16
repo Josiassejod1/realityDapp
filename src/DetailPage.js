@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { Alert, Container, Col, Row, Image, Button, Modal, Card } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-import {ethers} from "ethers";
+import {ethers, BigNumber} from "ethers";
 
 
 const Details = () => {
@@ -43,7 +43,7 @@ const Details = () => {
 
     const getListinDetails = async () => {
             try{
-                const resp = await market.getListing(house.listing_id);
+                const resp = await market.getListing(BigNumber.from(house.listing_id));
                 setNFtAssets(resp);
                 console.log(resp);
             } catch(error) {
@@ -53,8 +53,10 @@ const Details = () => {
 
     useEffect(() => {
         getHouses();
-        getListinDetails();
+       // getListinDetails();
     }, []);
+    
+   
 
     useEffect(() => {
         sdk.setProviderOrSigner(signer);

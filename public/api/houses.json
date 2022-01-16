@@ -12,7 +12,7 @@
         "header_image": "https://bafkreidao7wigddtsp7gwxuvxcheelt5rh2uo5talgbbcvyqq6bgkk43by.ipfs.dweb.link/",
         "sqft": "3444",
         "description": "Welcome to the newest neighborhood within the Twelve Bridges master-planned community in Lincoln, CA. Envision exquisite architecture paired with flexible floorplans – designed for energetic families.",
-        "images": []
+        "bidders": []
     },
     {
         "id": 1,
@@ -27,7 +27,7 @@
         "sqft": "2000",
         "header_image": "https://bafkreigfrphsofaldcuhajes7ujhc3t2clu5ucqu6eu5pco3eked4ymhsa.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the Solaire master-planned community in Roseville, CA. Offering single & two-story homes with unique spaces to work & play.",
-        "images": []
+        "bidders": []
     },
     {
         "id": 2,
@@ -42,7 +42,7 @@
         "sqft": "2200",
         "header_image": "https://bafybeiekwpovqccbj7hgy3hbgcnrt7gjwhgrz42477ykqmkn5yrhjj62aq.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the In SF",
-        "images": []
+        "bidders": []
     },
     {
         "id": 3,
@@ -57,6 +57,6 @@
         "sqft": "2200",
         "header_image": "https://bafkreifz4ovfmblqh7wbyapufkp4pva6vf6iuwdt7r5bf567pxg3hx6emq.ipfs.dweb.link/",
         "description": "Discover the beautiful sites",
-        "images": []
+        "bidders": []
     }
 ]

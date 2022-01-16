@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Home from "./Home";
 import Details from "./DetailPage";
+import Seller from "./SellerDashboard";
 
 import { Nav, NavItem, NavLink, Container, Button } from "reactstrap";
 import { useWeb3 } from "@3rdweb/hooks";
@@ -50,6 +51,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home/:id" element={<Details />} />
+          <Route path="/seller" element={<Seller />} />
         </Routes>
       </Container>
     </Router>
