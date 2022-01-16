@@ -25,6 +25,7 @@
     "reactstrap": "^9.0.1"
   },
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
