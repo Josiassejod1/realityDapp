@@ -3,7 +3,8 @@ import { useParams } from 'react-router';
 import { Alert, Container, Col, Row, Image, Button, Modal, Card } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-import {ethers, BigNumber} from "ethers";
+import { ethers, BigNumber } from "ethers";
+import { Map, Marker } from "pigeon-maps"
 
 
 const Details = () => {
@@ -40,38 +41,43 @@ const Details = () => {
                 return result.json();
             }).then((myJson) => {
                 setHouse(myJson[query.id])
-               // getBidInfo(myJson[query.id].listing_id);
+                // getBidInfo(myJson[query.id].listing_id);
             }).then(() => {
-              
+
             });
     }
 
-    const  getBidInfo = (id) => {
+    const getBidInfo = (id) => {
         const getWinningBid = market.getWinningBid(BigNumber.from(id));
         setBidDetails(getWinningBid);
     }
 
     const getListinDetails = async () => {
-            try{
-                const resp = await market.getListing(BigNumber.from(house.listing_id));
-                setNFtAssets(resp);
-                console.log(resp);
-            } catch(error) {
-                console.log(error);
-            }
+        try {
+            const resp = await market.getListing(BigNumber.from(house.listing_id));
+            setNFtAssets(resp);
+            console.log(resp);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getHouses();
-       // getListinDetails();
+        // getListinDetails();
     }, []);
-    
-   
+
+
 
     useEffect(() => {
         sdk.setProviderOrSigner(signer);
     }, [signer]);
 
+    const LocationPin = ({ text }) => (
+        <div className="pin">
+            <p className="pin-text">{text}</p>
+        </div>
+    )
     const makeBid = async () => {
         setPlacedBid(true);
         handleClose();
@@ -143,10 +149,15 @@ const Details = () => {
                     </Container>
                 </Col>
             </Row>
-            <Row style={{backgroundColor: "lightgrey", borderRadius: "10px"}}>
+            <Row style={{ backgroundColor: "lightgrey", borderRadius: "10px", width: "75%" }}>
                 <p style={{ paddingTop: 10 }}>
                     {house.description}
                 </p>
+            </Row>
+            <Row style={{ padding: "10px" }}>
+                <Map height={300} width={300} defaultCenter={house?.coordinates ?? [38.610390, -121.538600]} defaultZoom={11}>
+                    <Marker width={50} anchor={house?.coordinates ?? [38.610390, -121.538600]} />
+                </Map>
             </Row>
             <Modal
                 show={show}

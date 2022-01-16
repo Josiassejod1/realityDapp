@@ -12,6 +12,7 @@
         "header_image": "https://bafkreidao7wigddtsp7gwxuvxcheelt5rh2uo5talgbbcvyqq6bgkk43by.ipfs.dweb.link/",
         "sqft": "3444",
         "description": "Welcome to the newest neighborhood within the Twelve Bridges master-planned community in Lincoln, CA. Envision exquisite architecture paired with flexible floorplans – designed for energetic families.",
+        "coordinates": [38.610390, -121.538600],
         "bidders": []
     },
     {
@@ -27,12 +28,13 @@
         "sqft": "2000",
         "header_image": "https://bafkreigfrphsofaldcuhajes7ujhc3t2clu5ucqu6eu5pco3eked4ymhsa.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the Solaire master-planned community in Roseville, CA. Offering single & two-story homes with unique spaces to work & play.",
+        "coordinates": [37.817160, -122.281390],
         "bidders": []
     },
     {
         "id": 2,
         "street": "9435 Tensil Town",
-        "city": "San Grove",
+        "city": "San Jose",
         "state": "CA",
         "zipcode": "95624",
         "price": "773000",
@@ -42,6 +44,7 @@
         "sqft": "2200",
         "header_image": "https://bafybeiekwpovqccbj7hgy3hbgcnrt7gjwhgrz42477ykqmkn5yrhjj62aq.ipfs.dweb.link/",
         "description": "Discover a new home experience tucked away within the In SF",
+        "coordinates": [37.3382, 121.8863],
         "bidders": []
     },
     {
@@ -57,6 +60,7 @@
         "sqft": "2200",
         "header_image": "https://bafkreifz4ovfmblqh7wbyapufkp4pva6vf6iuwdt7r5bf567pxg3hx6emq.ipfs.dweb.link/",
         "description": "Discover the beautiful sites",
+        "coordinates": [37.7749, 122.4194],
         "bidders": []
     }
 ]
