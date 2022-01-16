@@ -31,8 +31,11 @@ const Seller = () => {
 
     const getAllListings = async () => {
         try {
-            const resp = await market.getAllListings();
-            setListings(resp);
+            const resp = market.getAllListings();
+            resp.then((result) => {
+                setListings(result);
+            });
+           
             console.log(resp);
         } catch (error) {
             console.log(error);
@@ -41,11 +44,19 @@ const Seller = () => {
 
     useEffect(() => {
         getAllListings()
+
+        const interval = setInterval(()=>{
+            getAllListings()
+           },20000)
+             
+             
+           return()=>clearInterval(interval)
+      
     }, []);
 
 
     return (
-        <Container>
+        <Container style={{padding: "40px"}}>
             <CardGroup>
                 {
                     listings.length > 0 ? (
@@ -54,13 +65,18 @@ const Seller = () => {
                             const property = asset.properties;
                             const listingDetails = listing.reservePriceCurrencyValuePerToken;
                             const buyout = listing.buyoutCurrencyValuePerToken;
+          
+                           return(
                             <Card style={{ width: '18rem', padding: "15px" }}>
-                                <Card.Img src={asset.image} />
-                                <Card.Text>{property.bed ?? ''}</Card.Text>
-                                <Card.Text>{property.bath ?? ''}</Card.Text>
-                                <Card.Text>{property.sqrft ?? ''}</Card.Text>
-                                <Card.Text>{buyout.displayValue + buyout.symbol ?? ''}</Card.Text>
-                            </Card>
+                            <Card.Title>{asset.name}</Card.Title>
+                            <Card.Img src={property.header_image ?? ''} />
+                            <Card.Text>{property.bed ?? property.beds ?? ''} bds</Card.Text>
+                            <Card.Text>{property.bath ?? ''} bath</Card.Text>
+                            <Card.Text>{property.sqrft ?? ''} sqrft</Card.Text>
+                            <Card.Text>{buyout.displayValue + buyout.symbol ?? ''} Buyout Price</Card.Text>
+                            <Card.Text>{listingDetails.displayValue + listingDetails.symbol ?? ''} Minimum Threshold Price</Card.Text>
+                        </Card>
+                           )
                         })
                     ) : (
                         <p>
@@ -69,9 +85,9 @@ const Seller = () => {
                     )
                 }
             </CardGroup>
-            <Button onclick={handleShow}>
+            {/* <Button onclick={handleShow}>
                 Create Listing
-            </Button>
+            </Button> */}
             <Modal
                 show={show}
                 onHide={handleClose}
