@@ -1,8 +1,9 @@
 
-import { Card, Button, Row, Container, CardGroup, Image } from 'react-bootstrap';
+import { Card, Button, Row, Container, CardGroup, Col } from 'react-bootstrap';
 import React, { useState, useEffect } from "react";
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+import { Map, Marker } from "pigeon-maps"
 import 'bootstrap/dist/css/bootstrap.css';
 import {
     Link,
@@ -10,6 +11,7 @@ import {
 
 const Home = () => {
     const [houses, setHouses] = useState([]);
+    const [coordinates, setCoordinates] = useState([]);
     const { address } = useWeb3();
     function getHouses() {
         const res = fetch('/api/houses.json',
@@ -20,38 +22,61 @@ const Home = () => {
                 }
             }).then((result) => {
                 return result.json();
-            }).then((myJson) => setHouses(myJson));
+            }).then((myJson) => {
+                setHouses(myJson)
+                var tempArray = [];
+                myJson.map(element => {
+                     console.log(element);
+                    tempArray.push(element.coordinates);
+                });
+                setCoordinates(tempArray);
+            });
     }
 
     const generateHomes = () => {
         return (
             <Container style={{ paddingTop: "40px" }}>
-                <CardGroup>
-                    {
-                        houses.length > 0 ? (
-                            houses.map((home) => {
-                                return (
-                                    <Link to={'/home/' + home.id} key={home.id}>
-                                        <Card style={{ width: '18rem', padding: "15px" }}>
-                                            <Card.Img src={home.header_image} />
-                                            <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
-                                            <Button variant="primary">Learn More</Button>
+                <Row>
+                    <Col>
+                        <Map defaultCenter={coordinates?.[0] ?? [38.610390, -121.538600]} defaultZoom={7}>
+                            {
+                                coordinates.map((latLong) => {
+                                   return(
+                                        <Marker anchor={latLong} />
+                                   );
+                                })
+                            }
+                        </Map>
+                    </Col>
+                    <Col>
+                        <CardGroup>
+                            {
+                                houses.length > 0 ? (
+                                    houses.map((home) => {
+                                        return (
+                                            <Link to={'/home/' + home.id} key={home.id}>
+                                                <Card style={{ width: '18rem', padding: "15px" }}>
+                                                    <Card.Img src={home.header_image} />
+                                                    <Card.Text>{home.street}, {home.city}, {home.state} {home.zipcode}</Card.Text>
+                                                    <Button variant="primary">Learn More</Button>
+                                                </Card>
+                                            </Link>
+                                        );
+                                    })
+                                ) : (
+                                    <Container style={{ justifyContent: 'center', alignItems: 'center', margin: "0 auto" }}>
+                                        <Card>
+                                            <Card.Title>We are out of inventory 🏠 </Card.Title>
+                                            <Card.Body>
+                                                Checkback for update listings
+                                            </Card.Body>
                                         </Card>
-                                    </Link>
-                                );
-                            })
-                        )  : (
-                            <Container style={{ justifyContent: 'center', alignItems: 'center', margin: "0 auto" }}>
-                                <Card>
-                                    <Card.Title>We are out of inventory 🏠 </Card.Title>
-                                    <Card.Body>
-                                        Checkback for update listings
-                                    </Card.Body>
-                                </Card>
-                            </Container>
-                        )
-                    }
-                </CardGroup>
+                                    </Container>
+                                )
+                            }
+                        </CardGroup>
+                    </Col>
+                </Row>
             </Container>
         )
     }
@@ -61,11 +86,13 @@ const Home = () => {
 
     if (address) {
         return (
-            <div>
+            <div style={{ padding: "10px" }}>
+
+                <h1> Active Listings </h1>
                 {
                     generateHomes()
                 }
-                {/* <div><p>{JSON.stringify(houses, null, 2)}</p></div> */}
+
             </div>
         );
     } else {
