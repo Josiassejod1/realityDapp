@@ -54,6 +54,11 @@ const App = () => {
           <Route path="/seller" element={<Seller />} />
         </Routes>
       </Container>
+      <Container style={{padding: "50px"}}>
+            <footer>
+                Created by <a href="_blank" src='https://www.twitter.com/officaldalvinj'>@officaldalvinj</a> | 	&trade; 2022 Reality dApp 
+            </footer>
+      </Container>
     </Router>
   );
 };

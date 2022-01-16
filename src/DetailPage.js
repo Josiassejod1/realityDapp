@@ -105,9 +105,9 @@ const Details = () => {
                     </Alert>
                 )
             }
-            <Row>
+            <Row >
                 <Col>
-                    <Image src={house.header_image} style={{ width: "350px" }} />
+                    <Image src={house.header_image} style={{ width: "350px", borderRadius: "10px" }} />
                     {
                         address && (
                             <Row>
@@ -143,7 +143,7 @@ const Details = () => {
                     </Container>
                 </Col>
             </Row>
-            <Row>
+            <Row style={{backgroundColor: "lightgrey", borderRadius: "10px"}}>
                 <p style={{ paddingTop: 10 }}>
                     {house.description}
                 </p>
