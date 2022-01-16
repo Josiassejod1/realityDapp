@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
-import { Alert, Container, Col, Row, Image, Button, Modal, Card } from 'react-bootstrap';
+import { Alert, Container, Col, Row, Image, Button, Modal, Card, CardGroup } from 'react-bootstrap';
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers, BigNumber } from "ethers";
@@ -29,6 +29,33 @@ const Details = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    //https://medium.com/quick-code/how-to-quickly-generate-a-random-gallery-of-images-from-an-unsplash-collection-in-javascript-4ddb2a6a4faf
+    // Got this auto generate from here thank you :)))
+
+    const numItemsToGenerate = 3; //how many gallery items you want on the screen
+    const numImagesAvailable = 475; //how many total images are in the collection you are pulling from
+    const imageWidth = 200; //your desired image width in pixels
+    const imageHeight = 200; //desired image height in pixels
+    const collectionID = 11430908; //the collection ID from the original url
+    function renderGalleryItem(randomNumber) {
+        fetch(`https://source.unsplash.com/collection/${collectionID}/${imageWidth}x${imageHeight}/?sig=${randomNumber}`)
+            .then((response) => {
+                let galleryItem = document.createElement('div');
+                galleryItem.classList.add('gallery-item');
+                galleryItem.innerHTML = `
+      <Image class="gallery-image" src="${response.url}" alt="gallery image"/>
+    `
+                document.getElementById("generate").appendChild(galleryItem);
+            })
+    }
+
+    useEffect(() => {
+        for (let i = 0; i < numItemsToGenerate; i++) {
+            let randomImageIndex = Math.floor(Math.random() * numImagesAvailable + i);
+            renderGalleryItem(randomImageIndex);
+        }
+    }, [])
 
     function getHouses() {
         const res = fetch('/api/houses.json',
@@ -146,18 +173,27 @@ const Details = () => {
                         <p>
                             Square Ft: {house.sqft}
                         </p>
+                        <p style={{ paddingTop: 10 }}>
+                            {house.description}
+                        </p>
                     </Container>
                 </Col>
             </Row>
             <Row style={{ backgroundColor: "lightgrey", borderRadius: "10px", width: "75%" }}>
-                <p style={{ paddingTop: 10 }}>
-                    {house.description}
-                </p>
+
             </Row>
             <Row style={{ padding: "10px" }}>
-                <Map height={300} width={300} defaultCenter={house?.coordinates ?? [38.610390, -121.538600]} defaultZoom={11}>
-                    <Marker width={50} anchor={house?.coordinates ?? [38.610390, -121.538600]} />
-                </Map>
+                <Col>
+                    <Map height={300}  defaultCenter={house?.coordinates ?? [38.610390, -121.538600]} defaultZoom={11}>
+                        <Marker  anchor={house?.coordinates ?? [38.610390, -121.538600]} />
+                    </Map>
+                </Col>
+            </Row>
+            <Row>
+                <h1>Gallery</h1>
+                <CardGroup id="generate">
+
+                </CardGroup>
             </Row>
             <Modal
                 show={show}
