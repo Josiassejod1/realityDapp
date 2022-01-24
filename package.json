@@ -5,6 +5,7 @@
   "dependencies": {
     "@3rdweb/hooks": "^1.8.0",
     "@3rdweb/sdk": "^1.35.0",
+    "@aave/protocol-js": "^4.3.0",
     "@googlemaps/react-wrapper": "^1.1.20",
     "@iconify/react": "^3.1.2",
     "@zoralabs/nft-components": "^0.3.2",
@@ -21,7 +22,7 @@
     "react-bootstrap": "^2.1.1",
     "react-dom": "^16.6.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "reactstrap": "^9.0.1"
   },
   "scripts": {
@@ -36,5 +37,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-waffle": "^2.0.2",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.3",
+    "hardhat": "^2.8.3"
+  }
 }
