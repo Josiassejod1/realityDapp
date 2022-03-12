@@ -5,7 +5,7 @@ import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers, BigNumber } from "ethers";
 import { Map, Marker } from "pigeon-maps"
-import { NFTStorage } from 'nft.storage';
+import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 import AB from "./AB.json";
 
 

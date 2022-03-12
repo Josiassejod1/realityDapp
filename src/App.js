@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Home from "./Home";
 import Details from "./DetailPage";
 import Seller from "./SellerDashboard";
+import Lending from "./Lending";
 
 import { Nav, NavItem, NavLink, Container, Button } from "reactstrap";
 import { useWeb3 } from "@3rdweb/hooks";
@@ -25,7 +26,7 @@ const App = () => {
 
   return (
     <Router>
-      <Container style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <Container style={{ justifyContent: 'center', alignItems: 'center', padding: '10px' }}>
         <Nav
         >
           <div>
@@ -35,6 +36,12 @@ const App = () => {
             <NavLink
             >
               <Link to="/">Home</Link>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+            >
+              <Link to="/lending">Lending</Link>
             </NavLink>
           </NavItem>
           <NavItem>
@@ -52,6 +59,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/home/:id" element={<Details />} />
           <Route path="/seller" element={<Seller />} />
+          <Route path="/Lending" element={<Lending />} />
         </Routes>
       </Container>
       <Container style={{padding: "50px"}}>

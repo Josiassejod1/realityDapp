@@ -123,9 +123,9 @@ const Seller = () => {
                     ) : <p>No files uploaded</p>
                 }
             </div>
-            {/* <Button onclick={handleShow}>
+            <Button onClick={handleShow}>
                 Create Listing
-            </Button> */}
+            </Button>
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -133,7 +133,13 @@ const Seller = () => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-
+                    <input type="text" name="address" placeholder="Address"></input>
+                    <input type="text" name="zipcode" placeholder="Zip Code"></input>
+                    <input type="text" name="state" placeholder="State"></input>
+                    <input type="text" name="street" placeholder="street"></input>
+                    <input type="text" name="beds" placeholder="Beds"></input>
+                    <input type="text" name="bath" placeholder="Baths"></input>
+                    <input type="text" name="bath" placeholder="Baths"></input>
                 </Modal.Header>
                 <Modal.Body>
 
