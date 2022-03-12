@@ -59,7 +59,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/home/:id" element={<Details />} />
           <Route path="/seller" element={<Seller />} />
-          <Route path="/Lending" element={<Lending />} />
+          {/* <Route path="/Lending" element={<Lending />} /> */}
         </Routes>
       </Container>
       <Container style={{padding: "50px"}}>
